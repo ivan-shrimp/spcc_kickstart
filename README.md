@@ -43,7 +43,7 @@ The following procedures may require familiarity with the comamnd line.
    
 3. Clone this repository:
    ```
-   git clone https://github.com/ivan_shrimp/spcc_kickstart.git
+   git clone https://github.com/ivan-shrimp/spcc_kickstart.git
    ```
 
 
