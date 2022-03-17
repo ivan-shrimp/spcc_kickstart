@@ -1,0 +1,19 @@
+[target.'cfg(all())']
+rustflags = [
+    # Workspace-wide lints.
+    # For more info, see:
+    # https://github.com/EmbarkStudios/rust-ecosystem/issues/22
+
+    # rustc lints
+    "-Dfuture_incompatible",
+    "-Dnonstandard_style",
+    "-Drust_2018_idioms",
+
+    # clippy lints
+    "-Dclippy::all",
+    "-Dclippy::pedantic",
+    "-Dclippy::nursery",
+
+    # We use some unsafe code, so we should ensure they are documented.
+    "-Dclippy::undocumented_unsafe_blocks",
+]
