@@ -56,7 +56,7 @@ cargo run --release --bin a1
 
 Expected output of the above when `SPCC` is provided to stdin:
 ```
-Hello World!
+Hello SPCC!
 ```
 
 For testing, run either `cargo test` or [`cargo nextest`](https://nexte.st/index.html) 
