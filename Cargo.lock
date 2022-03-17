@@ -36,9 +36,9 @@ name = "a5"
 version = "0.1.0"
 dependencies = [
  "assert_cmd",
- "lexical",
  "predicates",
  "quickcheck",
+ "read_u32",
 ]
 
 [[package]]
@@ -47,8 +47,8 @@ version = "0.1.0"
 dependencies = [
  "assert_cmd",
  "criterion",
- "lexical",
  "primal",
+ "read_u32",
 ]
 
 [[package]]
@@ -631,6 +631,13 @@ dependencies = [
  "crossbeam-utils",
  "lazy_static",
  "num_cpus",
+]
+
+[[package]]
+name = "read_u32"
+version = "0.1.0"
+dependencies = [
+ "lexical",
 ]
 
 [[package]]

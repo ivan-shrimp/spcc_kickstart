@@ -9,9 +9,7 @@ description = "Solution for SPCC Kickstart Problem A5"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-lexical = { version = "6.0", default-features = false, features = [
-    "parse-integers",
-] }
+read_u32 = { path = "../read_u32" }
 
 [dev-dependencies]
 assert_cmd = "2.0"
