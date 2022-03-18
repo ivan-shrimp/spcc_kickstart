@@ -108,6 +108,7 @@ impl<R: io::BufRead> U32Reader<R> {
         // Parse the input into an integer.
         // `parse_partial` ignores the delimiter(s) left by `read_until` at the end of the string.
         lexical::parse_partial(&self.buf)
+            // Panic if any overflow occured.
             .expect("Input cannot be represented by an unsigned 32-bit integer")
             .0
     }
