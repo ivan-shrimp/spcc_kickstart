@@ -1,3 +1,12 @@
 [workspace]
 
-members = ["a1", "a2", "a3", "a4", "a5", "a6", "read_u32"]
+members = [
+    "a1",
+    "a2",
+    "a3",
+    "a4",
+    "a5",
+    "a6",
+    "read_u32",
+    "test_run_bin",
+]

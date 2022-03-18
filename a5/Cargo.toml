@@ -12,6 +12,6 @@ description = "Solution for SPCC Kickstart Problem A5"
 read_u32 = { path = "../read_u32" }
 
 [dev-dependencies]
-assert_cmd = "2.0"
+test_run_bin = { path = "../test_run_bin" }
 predicates = "2.1"
 quickcheck = "1"
