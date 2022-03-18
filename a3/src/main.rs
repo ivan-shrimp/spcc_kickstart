@@ -21,7 +21,6 @@ fn main() {
         .filter(|&letter| ["a", "e", "i", "o", "u", "A", "E", "I", "O", "U"].contains(&letter))
         .count();
 
-    // Output routine.
     println!("{count}");
 }
 

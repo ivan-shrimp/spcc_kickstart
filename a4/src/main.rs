@@ -12,7 +12,6 @@ fn main() {
         triple_stair_steps + u32::from(stairs_completed != staircase_size)
     };
 
-    // Output routine.
     println!("{steps}");
 }
 

@@ -1,5 +1,4 @@
 fn main() {
-    // Output routine.
     println!("Hello {name}!", name = input_name());
 }
 
