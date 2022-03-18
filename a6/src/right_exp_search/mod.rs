@@ -2,7 +2,7 @@
 
 mod impl_for_slice;
 
-#[cfg(test)]
+#[cfg(all(test, not(miri)))]
 mod benches;
 #[cfg(test)]
 mod tests;
