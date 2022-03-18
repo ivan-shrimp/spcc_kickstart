@@ -5,14 +5,11 @@ fn main() {
     // "1 floating point number" implies the input should be
     // parsable into a C/C++ `float` / `double`
     // (corresponding to `f32` / `f64`).
-    let output = if (36.0..37.5).contains(&input_temp()) {
-        "YES"
+    if (36.0..37.5).contains(&input_temp()) {
+        println!("YES");
     } else {
-        "NO"
-    };
-
-    // Output routine.
-    println!("{output}");
+        println!("NO");
+    }
 }
 
 // Input routine.

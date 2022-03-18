@@ -6,7 +6,6 @@ fn main() {
 
     let result = a6::solve(&numbers);
 
-    // Output routine.
     match result {
         Some(num) => println!("{num}"),
         None => println!("-1"),
