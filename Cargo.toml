@@ -8,6 +8,12 @@ members = [
     "a5",
     "a6",
     "a6/a6_benchgen",
+    "b1",
+    "b2",
+    "b3",
+    "b4",
+    "b5",
+    "b6",
     "read_u32",
     "test_run_bin",
 ]
