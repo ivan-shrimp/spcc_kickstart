@@ -1,15 +1,6 @@
 #![cfg(not(miri))] // miri can't run other executables
 
-/// Runs the main executable and writes `input` to stdin,
-/// then ensures that it produces `output` in stdout.
-fn run(input: &str, output: &'static str) {
-    assert_cmd::Command::cargo_bin(env!("CARGO_PKG_NAME"))
-        .unwrap()
-        .write_stdin(input)
-        .assert()
-        .success()
-        .stdout(output);
-}
+test_run_bin::initialize!();
 
 const YES: &str = "YES\n";
 const NO: &str = "NO\n";
