@@ -38,8 +38,6 @@ The following procedures may require familiarity with the comamnd line.
 
 2. Install Rust using `rustup` from
    [Rust's official installation page](https://www.rust-lang.org/tools/install).
-   (There are some benchmarks that require nightly Rust to compile.
-   To use nightly Rust, choose the `nightly` channel when installing with `rustup`.)
    
 3. Clone this repository:
    ```
