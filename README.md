@@ -37,7 +37,11 @@ The following procedures may require familiarity with the comamnd line.
 1. [Install Git](https://git-scm.com/downloads) if it hasn't been installed.
 
 2. Install Rust using `rustup` from
-   [Rust's official installation page](https://www.rust-lang.org/tools/install).
+   [Rust's official installation page](https://www.rust-lang.org/tools/install).<br>
+   (Some code requires nightly Rust to compile.
+   To use nightly Rust, choose the `nightly` channel when installing with `rustup`.<br>
+   While we will try to use stabilized APIs only, we may include stabilized APIs
+   that have not entered the `stable` channel yet, so `nightly` is still required.)
    
 3. Clone this repository:
    ```
