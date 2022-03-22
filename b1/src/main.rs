@@ -13,13 +13,13 @@ fn main() {
 
 // Input routine.
 fn input_cost_members() -> impl Iterator<Item = (u32, u32)> {
-    let reader = read_u32::U32Reader::new();
+    let mut reader = read_u32::U32Reader::with_stdin();
 
-    let test_case_count = reader.read_until(b'\n');
+    let test_case_count = reader.read_until_newline();
 
     std::iter::repeat_with(move || {
-        let cost = reader.read_until(b' ');
-        let members = reader.read_until(b'\n');
+        let cost = reader.read_until_space();
+        let members = reader.read_until_newline();
         (cost, members)
     })
     .take(test_case_count as usize)

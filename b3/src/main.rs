@@ -27,10 +27,10 @@ fn main() {
 
 // Input routine.
 fn input_positions() -> [u32; 3] {
-    let reader = read_u32::U32Reader::new();
+    let mut reader = read_u32::U32Reader::with_stdin();
     [
-        reader.read_until(b' '),  // Alice
-        reader.read_until(b' '),  // Bob
-        reader.read_until(b'\n'), // Charlie
+        reader.read_until_space(),   // Alice
+        reader.read_until_space(),   // Bob
+        reader.read_until_newline(), // Charlie
     ]
 }

@@ -43,19 +43,17 @@ fn input_classrooms() -> impl Iterator<Item = impl Iterator<Item = bool>> {
         }
     }
 
-    let u32_reader = read_u32::U32Reader::new();
-
-    let test_case_count = u32_reader.read_until(b'\n');
+    let test_case_count = read_u32::U32Reader::with_stdin().read_until_newline();
 
     std::iter::repeat_with(move || {
+        let mut reader = read_u32::U32Reader::with_stdin();
+
         // First row is the number of classrooms, which we do not currently use.
-        let _classroom_count = u32_reader.read_until(b'\n');
+        let _classroom_count = reader.read_until_newline();
 
-        // Second row is the classroom information, which we will create an iterator over.
-        let stdin = io::stdin();
-        let stdin_lock = stdin.lock();
-
-        ClassroomReader { inner: stdin_lock }
+        ClassroomReader {
+            inner: reader.into_inner(),
+        }
     })
     .take(test_case_count as usize)
 }

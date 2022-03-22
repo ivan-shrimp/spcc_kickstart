@@ -51,12 +51,12 @@ fn main() {
 
 // Input routine.
 fn input_sticks_diamonds() -> impl Iterator<Item = (u32, u32)> {
-    let reader = read_u32::U32Reader::new();
+    let mut reader = read_u32::U32Reader::with_stdin();
 
-    let test_case_count = reader.read_until(b'\n');
+    let test_case_count = reader.read_until_newline();
 
     // The "sticks" value is terminated by a whitespace character
     // while the "diamonds" value is terminated by a newline character.
-    std::iter::repeat_with(move || (reader.read_until(b' '), reader.read_until(b'\n')))
+    std::iter::repeat_with(move || (reader.read_until_space(), reader.read_until_newline()))
         .take(test_case_count as usize)
 }
