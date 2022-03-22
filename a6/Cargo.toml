@@ -14,7 +14,8 @@ read_u32 = { path = "../read_u32" }
 [dev-dependencies]
 test_run_bin = { path = "../test_run_bin" }
 criterion = "0.3"
-primal = "0.3"
+a6_benchgen = { path = "./a6_benchgen" }
+rand = "0.8"
 
 [[bench]]
 name = "solve_bad_case"

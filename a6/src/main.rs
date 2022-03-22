@@ -14,10 +14,16 @@ fn main() {
 
 // Input routine.
 fn input_numbers() -> Vec<u32> {
-    let reader = read_u32::U32Reader::new();
+    let mut reader = read_u32::U32Reader::with_stdin();
 
     // Read the number of test cases from stdin.
-    let test_case_count = reader.read_until(b'\n');
+    let test_case_count = reader.read_until_newline() as usize;
 
-    reader.read_line(test_case_count as usize).collect()
+    let mut numbers = Vec::with_capacity(test_case_count);
+    for _ in 0..test_case_count - 1 {
+        numbers.push(reader.read_until_space());
+    }
+    numbers.push(reader.read_until_newline());
+
+    numbers
 }
