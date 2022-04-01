@@ -1,13 +1,13 @@
 use a6_benchgen::bad_case;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
-fn solve_bad_case(c: &mut Criterion) {
+fn no_solution(c: &mut Criterion) {
     let bad: Vec<u32> = bad_case().collect();
 
-    c.bench_function("solve_bad_case", |b| b.iter(|| black_box(a6::solve(&bad))));
+    c.bench_function("no_solution", |b| b.iter(|| black_box(a6::solve(&bad))));
 }
 
-fn solve_bad_case_with_solution(c: &mut Criterion) {
+fn with_solution(c: &mut Criterion) {
     // This number has exactly four factors, so when it is added to the bad case,
     // this will be the solution. However, the corresponding smallest multiplier is at least 23 * 29 = 667.
     // As our `a6` implementation starts searching from small multipliers,
@@ -21,12 +21,12 @@ fn solve_bad_case_with_solution(c: &mut Criterion) {
     let insert_magic_point = bad.binary_search(&MAGIC_NUMBER).unwrap_err();
     bad.insert(insert_magic_point, MAGIC_NUMBER);
 
-    c.bench_function("solve_bad_case_with_solution", |b| {
+    c.bench_function("with_solution", |b| {
         b.iter(|| black_box(a6::solve(&bad)));
     });
 }
 
-fn solve_bad_case_with_repeat(c: &mut Criterion) {
+fn with_repeat(c: &mut Criterion) {
     use rand::{distributions::WeightedIndex, prelude::*};
 
     let random_repeat = WeightedIndex::new([4, 3, 2, 1]).unwrap();
@@ -40,15 +40,27 @@ fn solve_bad_case_with_repeat(c: &mut Criterion) {
         .take(1_000_000)
         .collect();
 
-    c.bench_function("solve_bad_case_with_repeat", |b| {
+    c.bench_function("with_repeat", |b| {
         b.iter(|| black_box(a6::solve(&bad)));
+    });
+}
+
+fn extreme_repetition(c: &mut Criterion) {
+    let degenerate: Vec<u32> = (2..=999)
+        .chain(std::iter::repeat(1009).take(1_000_000 - 998 - 1))
+        .chain(std::iter::once(1_000_000))
+        .collect();
+
+    c.bench_function("extreme_repetition", |b| {
+        b.iter(|| black_box(a6::solve(&degenerate)));
     });
 }
 
 criterion_group!(
     benches,
-    solve_bad_case,
-    solve_bad_case_with_solution,
-    solve_bad_case_with_repeat
+    no_solution,
+    with_solution,
+    with_repeat,
+    extreme_repetition,
 );
 criterion_main!(benches);

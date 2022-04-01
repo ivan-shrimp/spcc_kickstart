@@ -84,6 +84,24 @@
 //     |  2 |  2 |  3 | 13 | 23 | 46 | 91 | 100 |
 //     +----+----+----+----+----+----+----+-----+
 
+// Regarding the computational complexity of this algorithm:
+// - Denote `n` as the number of inputs and `max` as the
+// - For every (unique, because Step 1) `a` among the inputs such that `a` <= sqrt(max):
+//   - In Step 2,
+//     we do at most 2 O(log(n)) binary searches to locate the
+//     lower and upper bounds of `bs`.
+//   - In Step 3,
+//     we iterate through `bs` in worst-case O(max / a) time (see code comments below in Step 3).
+//
+// Now the step 2 search is negligible compared to step 3,
+// so the total worst case complexity
+// = O(max / 2 + max / 3 + max / 4 + max / 5 + ... + max / sqrt(max))
+// = O(max * (1/2 + 1/3 + 1/4 + 1/5 + ... + 1/sqrt(max)))
+// = O(max * log(sqrt(max)))
+//   [1 + 1/2 + 1/3 + ... + 1/x is approximately ln(x) or "the logarithm of `x` base e",
+//   source: <https://en.wikipedia.org/wiki/Harmonic_number>]
+// = O(max * log(max)) [log properties].
+
 /// Solves Problem A6. Requires inputs to be sorted and between 2 and 10^6.
 #[must_use]
 pub fn solve(mut numbers: &[u32]) -> Option<u32> {
@@ -166,16 +184,62 @@ pub fn solve(mut numbers: &[u32]) -> Option<u32> {
 
         // Step 3.
 
-        // Find the largest possible `c` by iterating over `bs` from largest to smallest.
-        if let Some(new_c) = bs
-            .iter()
-            .rev()
-            // Calculate `c`.
-            .map(move |&b| a * b)
-            // Look for a `c` that is within the set of numbers.
-            .find(|&c| numbers_table[c as usize])
-        {
-            current_best_c = Some(new_c);
+        // There are two ways we can iterate through `bs` from largest to smallest:
+        // 1. Iterating over the `bs` slice directly.
+        // 2. Iterating over the `true` entries in `numbers_table` that correspond to `bs`.
+        //
+        // The first method requires O(`bs.len()`) time,
+        // while the second method requires O(last value in bs - first value in bs) time.
+        // In particular, the first one is at most around `n` while the second is at most around `max` / `a`.
+        //
+        // We dynamically select between these two methods to improve performance.
+        // (See the `extreme_repetition` benchmark for a case that would be
+        // extremely slow if only method 1 is used.)
+
+        let method_1 = || {
+            bs.iter()
+                // Iterate from largest to smallest.
+                .rev()
+                // Calculate `c`.
+                .map(move |&b| a * b)
+                // Look for a `c` that is within the set of numbers.
+                .find(|&c| numbers_table[c as usize])
+        };
+
+        let method_2 = |first: u32, last: u32| {
+            (first..=last)
+                // Iterate from largest to smallest.
+                .rev()
+                // Only consider those between `first` and `last` that actually exist in `bs`.
+                .filter(|&b| numbers_table[b as usize])
+                // Calculate `c`.
+                .map(move |b| a * b)
+                // Look for a `c` that is within the set of numbers.
+                .find(|&c| numbers_table[c as usize])
+        };
+
+        // We know `bs.len()` is not more than 10^6, so converting into a `u32` does not truncate.
+        #[allow(clippy::cast_possible_truncation)]
+        let new_c = match bs {
+            // Heuristics for checking if Method 2 would be faster.
+            &[first, .., last]
+                if {
+                    // Make it slightly more unlikely for Method 2 to be chosen,
+                    // because it's generally slower when the data is uniformly distibuted.
+                    const METHOD_2_THRESHOLD_RATIO: u32 = 2;
+                    (last - first) * METHOD_2_THRESHOLD_RATIO < (bs.len() as u32)
+                } =>
+            {
+                method_2(first, last)
+            }
+            _ => method_1(),
+        };
+
+        // Update the records.
+        // In Step 2 we have already ensured that if any new `c` is found,
+        // it must be better than the previous one(s).
+        if let Some(c) = new_c {
+            current_best_c = Some(c);
         }
     }
 
