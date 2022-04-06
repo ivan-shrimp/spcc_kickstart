@@ -10,9 +10,9 @@ description = "Solution for SPCC Kickstart Problem A6"
 
 [dependencies]
 read_u32 = { path = "../read_u32" }
+kickstart_macros = { path = "../kickstart_macros" }
 
 [dev-dependencies]
-test_run_bin = { path = "../test_run_bin" }
 criterion = "0.3"
 a6_benchgen = { path = "./a6_benchgen" }
 rand = "0.8"

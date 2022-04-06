@@ -1,6 +1,4 @@
-#![cfg(not(miri))]
-
-test_run_bin::initialize!();
+kickstart_macros::fn_run!(b5);
 
 const GOOD: &str = "1\n";
 const BAD: &str = "0\n";

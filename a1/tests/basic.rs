@@ -1,6 +1,4 @@
-#![cfg(not(miri))]
-
-test_run_bin::initialize!();
+kickstart_macros::fn_run!(a1);
 
 #[test]
 fn samples() {

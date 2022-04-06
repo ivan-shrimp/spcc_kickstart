@@ -1,102 +1,83 @@
-/// Calculates the minimum distances that all students need to walk.
-///
-/// # Panics
-///
-/// Panics if there is no collection point among the classrooms.
-pub fn minimum_distance(classrooms: impl IntoIterator<Item = bool>) -> u64 {
-    use std::ops::ControlFlow;
+use std::io::prelude::*;
 
-    let mut next_classroom = {
-        let mut classrooms = classrooms.into_iter();
+mod min_distance;
 
-        move || {
-            classrooms.try_fold(
-                0u32,
-                |previous_empty_classrooms, this_is_collection_point| {
-                    if this_is_collection_point {
-                        // If we've reached a collection point,
-                        // return the number of consecutive classrooms to the left that did not have a collection point.
-                        ControlFlow::Break(previous_empty_classrooms)
-                    } else {
-                        // If we haven't reached a collection point,
-                        // add one more empty classroom to the accumulator.
-                        // (If the last classroom is reached,
-                        //  the number of rightmost empty classrooms `x` will be returned as `ControlFlow::Continue(x)`.)
-                        ControlFlow::Continue(previous_empty_classrooms + 1)
-                    }
-                },
-            )
+// for direct testing
+pub use min_distance::minimum_distance;
+
+pub fn main_impl(input: impl BufRead, mut output: impl Write) {
+    let mut test_cases = input_classrooms(input);
+
+    while let Some(classrooms) = test_cases.next_test_case() {
+        writeln!(
+            output,
+            "{distance}",
+            distance = minimum_distance(classrooms)
+        )
+        .expect("An output error occured");
+    }
+}
+
+#[derive(Debug)]
+struct TestCaseReader<R> {
+    inner: R,
+    counter: u32,
+}
+
+impl<R: BufRead> TestCaseReader<R> {
+    fn next_test_case(&mut self) -> Option<impl Iterator<Item = bool> + '_> {
+        /// An iterator over the input test cases.
+        #[derive(Debug)]
+        struct ClassroomReader<R: Read> {
+            inner: R,
         }
-    };
 
-    let mut total_distance = match next_classroom() {
-        // Initialize the total distance accumulator
-        // with the distance sum of students to the left of the first collection point.
-        //
-        // Consider the following classrooms,
-        // where there are 3 empty rooms to the left of X:
-        //
-        //             +---+---+---+---+----
-        // classrooms  | 0 | 0 | 0 | 1 | ...
-        //             +---+---+---+---+----
-        //  distances    3>  2>  1>  X
-        //
-        // Here, the required distance sum is 1 + 2 + 3.
-        // In general, it is 1 + 2 + ... + `empty_rooms`,
-        // which is equal to `empty_rooms` * (`empty_rooms` + 1) / 2.
-        ControlFlow::Break(empty_rooms) => {
-            // Because `empty_rooms` can be around 5 * 10^5, the total distance can overflow a u32.
-            let empty_rooms = u64::from(empty_rooms);
-            empty_rooms * (empty_rooms + 1) / 2
-        }
-        ControlFlow::Continue(_) => panic!("There is no collection point among all classrooms"),
-    };
+        impl<R: Read> Iterator for ClassroomReader<R> {
+            type Item = bool;
 
-    loop {
-        match next_classroom() {
-            // Consider the following classrooms,
-            // where there are 6 empty rooms between X and Y:
-            //
-            //             ----+---+---+---+---+---+---+---+---+----
-            // classrooms  ... | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | ...
-            //             ----+---+---+---+---+---+---+---+---+----
-            //  distances        X  <1  <2  <3   3>  2>  1>  Y
-            //
-            // Here, the distance sum of students between X and Y is 1 + 2 + 3 + 3 + 2 + 1.
-            // In general, it is 1 + 2 + ... + `empty_rooms` / 2 + `empty_rooms` / 2 + ... + 2 + 1,
-            // which is equal to `empty_rooms` * (`empty_rooms` + 2) / 4.
-            //
-            // Now consider the following classrooms,
-            // where there are 7 empty rooms between X and Y:
-            //
-            //             ----+---+---+---+---+---+---+---+---+---+----
-            // classrooms  ... | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | ...
-            //             ----+---+---+---+---+---+---+---+---+---+----
-            //  distances        X  <1  <2  <3  <4>  3>  2>  1>  Y
-            //
-            // Here, the required distance sum
-            // The distance sum of students between X and Y is
-            // 1 + 2 + ... + (`empty_rooms` + 1) / 2 + ... + 2 + 1,
-            // which is equal to (`empty_rooms` + 1) * (`empty_rooms` + 1) / 4.
-            //
-            // From these two examples,
-            // we notice that there is a difference between odd and even empty rooms.
-            // However, notice that the expression for odd rooms can be rewritten as
-            // "(`empty_rooms` * (`empty_rooms` + 2) / 4) + 1 / 4".
-            // so using the odd-room formula for the even-room case
-            // gives an answer that is 0.25 above the correct solution.
-            // Therefore, we can rely on rounding down in integer division to
-            // calculate the even-room case using the formula for the odd-room case.
-            ControlFlow::Break(empty_rooms) => {
-                let empty_rooms = u64::from(empty_rooms);
-                total_distance += (empty_rooms + 1) * (empty_rooms + 1) / 4;
-            }
-            // We have reached the end of the classroom.
-            // Add the distance sum for the rightmost students like the leftmost ones, and return.
-            ControlFlow::Continue(final_empty_rooms) => {
-                let final_empty_rooms = u64::from(final_empty_rooms);
-                return total_distance + final_empty_rooms * (final_empty_rooms + 1) / 2;
+            fn next(&mut self) -> Option<Self::Item> {
+                let mut byte = 0;
+                loop {
+                    return match self.inner.read(std::slice::from_mut(&mut byte)) {
+                        Ok(0) => None,
+                        Ok(..) => match byte {
+                            // '0' means there's no collection point at this classroom.
+                            b'0' => Some(false),
+                            // '1' means there's a collection point at this classroom.
+                            b'1' => Some(true),
+                            // We have reached the end of this test case.
+                            b'\n' => None,
+                            // This should be a part of a \r\n newline, so retry to get the \n.
+                            b'\r' => continue,
+                            // Panic if the input is invalid
+                            // (or probably if the iterator is called again after yielding None).
+                            _ => panic!("Invalid classroom data"),
+                        },
+                        Err(ref e) if e.kind() == std::io::ErrorKind::Interrupted => continue,
+                        // Panic if any unexpected input error occured.
+                        Err(e) => Err(e).expect("An input error occured"),
+                    };
+                }
             }
         }
+
+        // Return `None` if there are no more test cases.
+        self.counter = self.counter.checked_sub(1)?;
+
+        // First row is the number of classrooms, which we do not currently use.
+        let _classroom_count = read_u32::U32Reader::new(&mut self.inner).read_until_newline();
+
+        Some(ClassroomReader {
+            inner: &mut self.inner,
+        })
+    }
+}
+
+// Input routine.
+fn input_classrooms(mut input: impl BufRead) -> TestCaseReader<impl BufRead> {
+    let test_case_count = read_u32::U32Reader::new(&mut input).read_until_newline();
+    TestCaseReader {
+        inner: input,
+        counter: test_case_count,
     }
 }

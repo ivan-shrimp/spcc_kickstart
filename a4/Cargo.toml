@@ -9,6 +9,4 @@ description = "Solution for SPCC Kickstart Problem A4"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-
-[dev-dependencies]
-test_run_bin = { path = "../test_run_bin" }
+kickstart_macros = { path = "../kickstart_macros" }

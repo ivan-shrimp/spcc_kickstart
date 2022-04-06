@@ -7,6 +7,4 @@ edition = "2021"
 
 [dependencies]
 read_u32 = { path = "../read_u32" }
-
-[dev-dependencies]
-test_run_bin = { path = "../test_run_bin" }
+kickstart_macros = { path = "../kickstart_macros" }

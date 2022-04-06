@@ -1,11 +1,9 @@
-// miri can't run other executables
-#![cfg(not(miri))]
 // Required in the `unicode` test.
 // This `allow` is here because when rust-analyzer calls clippy,
 // it complains if we put this directly above `fn unicode()`.
 #![allow(clippy::unicode_not_nfc)]
 
-test_run_bin::initialize!();
+kickstart_macros::fn_run!(a3);
 
 #[test]
 fn samples() {
@@ -36,10 +34,10 @@ fn Chinese() {
     // Its second byte is exactly the ASCII character 'A'.
     run("允", "0\n");
 
-    // these strings have more than 100 bytes,
+    // These strings have more than 100 bytes,
     // but `len(s)` in Python would still return 100.
     run(&"測試".repeat(50), "0\n");
-    // make sure we don't ignore the first or last characters
+    // Make sure we don't ignore the first or last characters.
     run(&"A測試B".repeat(25), "25\n");
     run(&"B測試A".repeat(25), "25\n");
 }

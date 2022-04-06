@@ -1,6 +1,4 @@
-#![cfg(not(miri))] // miri can't run other executables
-
-test_run_bin::initialize!();
+kickstart_macros::fn_run!(a2);
 
 const YES: &str = "YES\n";
 const NO: &str = "NO\n";

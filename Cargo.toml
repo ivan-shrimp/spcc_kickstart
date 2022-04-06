@@ -15,5 +15,5 @@ members = [
     "b5",
     "b6",
     "read_u32",
-    "test_run_bin",
+    "kickstart_macros",
 ]

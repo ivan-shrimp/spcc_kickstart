@@ -6,21 +6,21 @@ version = 3
 name = "a1"
 version = "0.1.0"
 dependencies = [
- "test_run_bin",
+ "kickstart_macros",
 ]
 
 [[package]]
 name = "a2"
 version = "0.1.0"
 dependencies = [
- "test_run_bin",
+ "kickstart_macros",
 ]
 
 [[package]]
 name = "a3"
 version = "0.1.0"
 dependencies = [
- "test_run_bin",
+ "kickstart_macros",
  "unicode-segmentation",
 ]
 
@@ -28,17 +28,16 @@ dependencies = [
 name = "a4"
 version = "0.1.0"
 dependencies = [
- "test_run_bin",
+ "kickstart_macros",
 ]
 
 [[package]]
 name = "a5"
 version = "0.1.0"
 dependencies = [
- "predicates",
+ "kickstart_macros",
  "quickcheck",
  "read_u32",
- "test_run_bin",
 ]
 
 [[package]]
@@ -47,9 +46,9 @@ version = "0.1.0"
 dependencies = [
  "a6_benchgen",
  "criterion",
+ "kickstart_macros",
  "rand",
  "read_u32",
- "test_run_bin",
 ]
 
 [[package]]
@@ -78,20 +77,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4361135be9122e0870de935d7c439aef945b9f9ddd4199a553b5270b49c82a27"
 
 [[package]]
-name = "assert_cmd"
-version = "2.0.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "93ae1ddd39efd67689deb1979d80bad3bf7f2b09c6e6117c8d1f2443b5e2f83e"
-dependencies = [
- "bstr",
- "doc-comment",
- "predicates",
- "predicates-core",
- "predicates-tree",
- "wait-timeout",
-]
-
-[[package]]
 name = "atty"
 version = "0.2.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -112,46 +97,46 @@ checksum = "d468802bab17cbc0cc575e9b053f41e72aa36bfa6b7f55e3529ffa43161b97fa"
 name = "b1"
 version = "0.1.0"
 dependencies = [
+ "kickstart_macros",
  "read_u32",
- "test_run_bin",
 ]
 
 [[package]]
 name = "b2"
 version = "0.1.0"
 dependencies = [
- "test_run_bin",
+ "kickstart_macros",
 ]
 
 [[package]]
 name = "b3"
 version = "0.1.0"
 dependencies = [
+ "kickstart_macros",
  "read_u32",
- "test_run_bin",
 ]
 
 [[package]]
 name = "b4"
 version = "0.1.0"
 dependencies = [
+ "kickstart_macros",
  "read_u32",
- "test_run_bin",
 ]
 
 [[package]]
 name = "b5"
 version = "0.1.0"
 dependencies = [
- "test_run_bin",
+ "kickstart_macros",
 ]
 
 [[package]]
 name = "b6"
 version = "0.1.0"
 dependencies = [
+ "kickstart_macros",
  "read_u32",
- "test_run_bin",
 ]
 
 [[package]]
@@ -337,18 +322,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "difflib"
-version = "0.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6184e33543162437515c2e2b48714794e37845ec9851711914eec9d308f6ebe8"
-
-[[package]]
-name = "doc-comment"
-version = "0.3.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fea41bba32d969b513997752735605054bc0dfa92b4c56bf1189f2e174be7a10"
-
-[[package]]
 name = "either"
 version = "1.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -362,15 +335,6 @@ checksum = "a19187fea3ac7e84da7dacf48de0c45d63c6a76f9490dae389aead16c243fce3"
 dependencies = [
  "log",
  "regex",
-]
-
-[[package]]
-name = "float-cmp"
-version = "0.9.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "98de4bbd547a563b716d8dfa9aad1cb19bfab00f4fa09a6a4ed21dbcf44ce9c4"
-dependencies = [
- "num-traits",
 ]
 
 [[package]]
@@ -458,6 +422,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "kickstart_macros"
+version = "0.1.0"
+
+[[package]]
 name = "lazy_static"
 version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -530,12 +498,6 @@ checksum = "5aa361d4faea93603064a027415f07bd8e1d5c88c9fbf68bf56a285428fd79ce"
 dependencies = [
  "autocfg",
 ]
-
-[[package]]
-name = "normalize-line-endings"
-version = "0.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "61807f77802ff30975e01f4f071c8ba10c022052f98b3294119f3e615d13e5be"
 
 [[package]]
 name = "num-integer"
@@ -614,36 +576,6 @@ name = "ppv-lite86"
 version = "0.2.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "eb9f9e6e233e5c4a35559a617bf40a4ec447db2e84c20b55a6f83167b7e57872"
-
-[[package]]
-name = "predicates"
-version = "2.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a5aab5be6e4732b473071984b3164dbbfb7a3674d30ea5ff44410b6bcd960c3c"
-dependencies = [
- "difflib",
- "float-cmp",
- "itertools",
- "normalize-line-endings",
- "predicates-core",
- "regex",
-]
-
-[[package]]
-name = "predicates-core"
-version = "1.0.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "da1c2388b1513e1b605fcec39a95e0a9e8ef088f71443ef37099fa9ae6673fcb"
-
-[[package]]
-name = "predicates-tree"
-version = "1.0.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4d86de6de25020a36c6d3643a86d9a6a9f552107c0559c60ea03551b5e16c032"
-dependencies = [
- "predicates-core",
- "termtree",
-]
 
 [[package]]
 name = "primal"
@@ -942,19 +874,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "termtree"
-version = "0.2.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "507e9898683b6c43a9aa55b64259b721b52ba226e0f3779137e50ad114a4c90b"
-
-[[package]]
-name = "test_run_bin"
-version = "0.1.0"
-dependencies = [
- "assert_cmd",
-]
-
-[[package]]
 name = "textwrap"
 version = "0.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1002,15 +921,6 @@ name = "version_check"
 version = "0.9.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
-
-[[package]]
-name = "wait-timeout"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9f200f5b12eb75f8c1ed65abd4b2db8a6e1b138a20de009dacee265a2498f3f6"
-dependencies = [
- "libc",
-]
 
 [[package]]
 name = "walkdir"
