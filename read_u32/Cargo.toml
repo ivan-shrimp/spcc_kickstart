@@ -1,7 +1,10 @@
 [package]
 name = "read_u32"
-version = "0.1.0"
+version = "0.0.0"
+authors = ["ivan-shrimp"]
 edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "Integer reader and parser"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
