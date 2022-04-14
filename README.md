@@ -2,77 +2,50 @@
 
 This repository contains a set of solutions to SPCC Kickstart problems.
 
-## Design decisions
-
-### Why so much code?
-
-These solutions prioritize correctness, maintainability and speed
-over programmer time, so all code is commented in detail and
-with complete test suites. Some may include benchmarks.
-
-In these solutions, we disregard the fact that SPCC Kickstart
-is a competitive programming competition,
-and consider edge cases carefully, 
-making sure that the programs satisfy all requirements.
-
-As of mid March 2022, no solutions in this repository have been submitted,
-because it often requires weeks to write one round of solutions.
-The organizers are also unlikely to accept Rust or have Rust installed.
-Some solutions require a small number of runtime dependencies
-outside the standard library,
-which are generally disallowed in competitive programming.
-
-### Why Rust?
-
-There aren't advanced Rust skills in these solutions, 
-so they can easily be translated into C++.  
-However, the tooling (lints/testing/benchmarking/formatting) 
-is generally better with Rust, so the code is in Rust.
-
-
-## Installation
+## Downloading
 
 The following procedures may require familiarity with the comamnd line.
+If you need a simpler way to download, please file an issue.
 
 1. [Install Git](https://git-scm.com/downloads) if it hasn't been installed.
 
-2. Install Rust using `rustup` from
-   [Rust's official installation page](https://www.rust-lang.org/tools/install).<br>
-   (Some code requires nightly Rust to compile.
-   To use nightly Rust, choose the `nightly` channel when installing with `rustup`.<br>
-   While we will try to use stabilized APIs only, we may include stabilized APIs
-   that have not entered the `stable` channel yet, so `nightly` is still required.)
+2. Install _nightly_ Rust using `rustup` from
+   [Rust's official installation page](https://www.rust-lang.org/tools/install).
    
 3. Clone this repository:
    ```
    git clone https://github.com/ivan-shrimp/spcc_kickstart.git
    ```
 
+## Usage
 
-## Running the binaries
+`cd` into the `spcc_kickstart` directory, then run:
+```
+cargo run --release --bin <insert lowercase problem number here>
+```
 
-Run each executable with:
+For example, to use the solution for problem A1, run:
 ```
 cargo run --release --bin a1
 ```
 
-Expected output of the above when `SPCC` is provided to stdin:
-```
-Hello SPCC!
-```
+As all programs take input via _standard input_, you won't see any output with
+just the above.
+To actually get some output, either:
+- type `SPCC` followed by `Ctrl+Z`, which gives `Hello SPCC!`; or
+- run `echo SPCC | cargo run --release --bin a1`, which also gives
+  `Hello SPCC!`.
 
-For testing, run either `cargo test` or [`cargo nextest`](https://nexte.st/index.html) 
-in the root directory.
+## Project structure
 
-For benchmarking: run either `cargo bench` or [`cargo criterion`](https://github.com/bheisler/cargo-criterion) in the root directory.
-
+See [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## License
 
-These solutions for SPCC Kickstart are distributed under the terms of 
-both the MIT license and the Apache License (Version 2.0).
+These solutions for SPCC Kickstart are distributed under the terms of both the
+MIT license and the Apache License (Version 2.0).
 
 See [LICENSE-APACHE](LICENSE-APACHE) and [LICENSE-MIT](LICENSE-MIT) for details.
 
-The problems and official solutions for SPCC Kickstart are owned by
-SPCC's Computer Club, and are distributed to their discretion.
+The problems and official solutions for SPCC Kickstart are written by SPCC's
+Computer Club, and are distributed to their discretion.

@@ -1,0 +1,9 @@
+[package]
+name = "kickstart_macros"
+version = "0.0.0"
+authors = ["ivan-shrimp"]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "Helper macros"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

@@ -1,6 +1,4 @@
-#![cfg(not(miri))] // miri can't run other executables
-
-test_run_bin::initialize!();
+kickstart_macros::fn_run!(a6);
 
 #[test]
 fn sample() {

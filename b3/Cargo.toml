@@ -1,12 +1,13 @@
 [package]
 name = "b3"
 version = "0.1.0"
+authors = ["ivan-shrimp"]
 edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "Solution for SPCC Kickstart Problem B3"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 read_u32 = { path = "../read_u32" }
-
-[dev-dependencies]
-test_run_bin = { path = "../test_run_bin" }
+kickstart_macros = { path = "../kickstart_macros" }

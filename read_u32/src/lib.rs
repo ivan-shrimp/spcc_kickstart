@@ -7,17 +7,6 @@ pub struct U32Reader<R: io::BufRead> {
     reader: R,
 }
 
-impl U32Reader<io::StdinLock<'static>> {
-    /// Creates a new adapter that reads `u32`s from `stdin`.
-    ///
-    /// This locks `stdin`, and the lock will only be released
-    /// when this `U32Reader` is dropped.
-    #[must_use]
-    pub fn with_stdin() -> Self {
-        Self::new(io::stdin().lock())
-    }
-}
-
 impl<R: io::BufRead> U32Reader<R> {
     /// Creates a new adapter that reads `u32`s from the given reader.
     #[must_use]
@@ -61,9 +50,7 @@ impl<R: io::BufRead> U32Reader<R> {
             let available = match self.reader.fill_buf() {
                 Ok(n) => n,
                 Err(ref e) if e.kind() == io::ErrorKind::Interrupted => continue,
-                Err(e) => {
-                    panic!("An I/O error occured when attempting to read from stdin: {e:?}")
-                }
+                Err(e) => Err(e).expect("An input error occured"),
             };
 
             // Parse the first bytes of the buffer into an integer.
@@ -100,10 +87,9 @@ impl<R: io::BufRead> U32Reader<R> {
             .reader
             // Read the decimal-encoded number into the buffer.
             .read_until(delim, &mut self.buf)
-            // Panic if any I/O error occured.
-            .expect("An I/O error occured when attempting to read from stdin");
+            .expect("An input error occured");
 
-        assert_ne!(used, 0, "No more integers can be read from stdin");
+        assert_ne!(used, 0, "No more integers can be read");
 
         // Parse the input into an integer.
         // `parse_partial` ignores the delimiter(s) left by `read_until` at the end of the string.

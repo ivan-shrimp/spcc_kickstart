@@ -1,6 +1,4 @@
-#![cfg(not(miri))]
-
-test_run_bin::initialize!();
+kickstart_macros::fn_run!(b6);
 
 // More tests on the logic in `min_distance.rs`.
 // These are mainly I/O tests, to test our custom input iterator.
