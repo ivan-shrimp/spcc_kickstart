@@ -1,10 +1,10 @@
 use std::io::prelude::*;
 
-mod validate;
+mod logic;
 
 pub fn main_impl(input: impl BufRead, mut output: impl Write) {
     match input_sudoku_board(input) {
-        Some(board) if validate::validate(&board) => {
+        Some(board) if logic::is_valid_board(&board) => {
             writeln!(output, "1")
         }
         _invalid => {

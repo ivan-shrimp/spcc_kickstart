@@ -1,9 +1,9 @@
 use std::io::prelude::*;
 
-mod min_distance;
+mod logic;
 
 // for direct testing
-pub use min_distance::minimum_distance;
+pub use logic::minimum_distance;
 
 pub fn main_impl(input: impl BufRead, mut output: impl Write) {
     let mut test_cases = input_classrooms(input);

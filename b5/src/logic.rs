@@ -1,6 +1,6 @@
 /// Validates the 9x9 sudoku board, with input numbers from 0 to 8.
 #[must_use]
-pub fn validate(board: &[[u8; 9]; 9]) -> bool {
+pub fn is_valid_board(board: &[[u8; 9]; 9]) -> bool {
     // The values in all groups must be a permutation of 0, 1, 2, 3, 4, 5, 6, 7 and 8.
     #[rustfmt::skip]
     const GROUPS: [[[usize; 2]; 9]; 27] = [

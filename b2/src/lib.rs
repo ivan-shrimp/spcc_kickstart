@@ -1,11 +1,10 @@
+mod logic;
+
 use std::io::prelude::*;
 
 pub fn main_impl(input: impl BufRead, mut output: impl Write) {
-    // The 7 characters that will not be changed when rotated 180 degrees.
-    const LETTERS_ON_SIGN: &[u8] = b"HINOSXZ";
-
     // Check that every input letter is a letter that can be put on the sign.
-    if input_letters(input).all(|letter| LETTERS_ON_SIGN.contains(&letter)) {
+    if logic::is_sign(input_letters(input)) {
         writeln!(output, "YES")
     } else {
         writeln!(output, "NO")

@@ -1,3 +1,5 @@
+mod logic;
+
 use std::io::prelude::*;
 
 pub fn main_impl(input: impl BufRead, mut output: impl Write) {
@@ -7,7 +9,7 @@ pub fn main_impl(input: impl BufRead, mut output: impl Write) {
     // "1 floating point number" implies the input should be
     // parsable into a C/C++ `float` / `double`
     // (corresponding to `f32` / `f64`).
-    if (36.0..37.5).contains(&input_temp(input)) {
+    if logic::is_normal_temperature(input_temp(input)) {
         writeln!(output, "YES")
     } else {
         writeln!(output, "NO")

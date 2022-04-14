@@ -11,9 +11,7 @@ pub fn main_impl(input: impl BufRead, mut output: impl Write) {
     // Sort the input numbers for `solve`.
     numbers.sort_unstable();
 
-    let result = solve(&numbers);
-
-    match result {
+    match solve(&numbers) {
         Some(num) => writeln!(output, "{num}"),
         None => writeln!(output, "-1"),
     }
